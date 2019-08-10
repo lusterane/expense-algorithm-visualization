@@ -1,23 +1,12 @@
 package financeCalculation;
 
 public class ExpenseObject {
-	class Conditional {
-		private String timeInterval;
-		private int amount;
-		public Conditional(String timeInterval, int amount) {
-			this.timeInterval = timeInterval;
-			this.amount = amount;
-		}
-		
-		// make getters and setters
-	}
-	
 	private String name, timeInterval;
 	private double amount;
-	protected static String YEARLY = "YEARLY";
-	protected static String MONTHLY = "MONTHLY";
-	protected static String DAILY = "DAILY";
-	protected static String ONE_TIME = "ONE_TIME";
+	public static final String YEARLY = "YEARLY";
+	public static final String MONTHLY = "MONTHLY";
+	public static final String DAILY = "DAILY";
+	public static final String ONE_TIME = "ONE_TIME";
 	
 	public ExpenseObject(String name, double amount, String timeInterval) {
 		this.name = name;
@@ -48,12 +37,4 @@ public class ExpenseObject {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-	/*
-	public Conditional getConditional() {
-		return conditional;
-	}
-	
-	public void setConditional(Conditional conditional) {
-		this.conditional = conditional;
-	}*/
 }
