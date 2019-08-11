@@ -9,8 +9,10 @@ import java.util.Stack;
 public class CalculationBuilder {
 	public static HashMap<Integer, Double> buildCalculation(List<ExpenseObject> expenseObjectList, String timeInterval, int stoppingPoint) {
 		HashMap<Integer, Double> hashMapTotals = new HashMap<Integer, Double>();
+		hashMapTotals.put(0, 0.0);
 		
 		List<ExpenseObject> orderedList = orderForTimeInterval(expenseObjectList, timeInterval);
+		
 		int counter = 1;
 		
 		if(timeInterval.equals(ExpenseObject.DAILY)){
@@ -41,11 +43,11 @@ public class CalculationBuilder {
 						total += current.getAmount()*31;
 					}
 				}
-				counter++;
 				
 				// counter is month
 				// total is calculated price of month
 				hashMapTotals.put(counter, total);
+				counter++;
 			}
 		}
 		else if(timeInterval.equals(ExpenseObject.YEARLY)){
