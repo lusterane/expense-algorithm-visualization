@@ -1,8 +1,10 @@
 package LineChart;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
 import financeCalculation.CalculationBuilder;
 import financeCalculation.ExpenseObject;
@@ -16,21 +18,23 @@ import javafx.stage.Stage;
 
 
 public class LineChartApplication extends Application{
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Expenses Visualization");
+        // setting title
+		primaryStage.setTitle("Expenses Visualization");
         
+		// defining axis
         NumberAxis xAxis = new NumberAxis();
         xAxis.setLabel("Months");
 
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Amount of Expense (USD)");
 
-        @SuppressWarnings("unchecked")
-		LineChart lineChart = new LineChart(xAxis, yAxis);
+		final LineChart<Number, Number> lineChart = 
+				new LineChart<Number, Number>(xAxis, yAxis);
 
-        XYChart.Series dataSeries1 = new XYChart.Series();
+		// defining series
+        XYChart.Series<Number, Number> dataSeries1 = new XYChart.Series<Number, Number>();
         dataSeries1.setName("Expense 1");
         
         // create data 
@@ -45,23 +49,22 @@ public class LineChartApplication extends Application{
  		packedEO.add(apple);
  		packedEO.add(android);
  		packedEO.add(firebase);
- 		
- 		// Provide list of ExpenseObject from previous step, interval of time for data to calculate, and length of time for data
- 		List<Double> totalList = CalculationBuilder.buildCalculation(packedEO, ExpenseObject.MONTHLY, 60);
+
+ 		// Aggregate expense object to algorithm for calculation
+ 		HashMap<Integer, Double> hashMapTotal = CalculationBuilder.buildCalculation(packedEO, ExpenseObject.MONTHLY, 60);
         
- 		Iterator<Double> iterator = totalList.iterator();
-		int counter = 1;
-		double current = 0;
+ 		Iterator<Entry<Integer, Double>> iterator = hashMapTotal.entrySet().iterator();
+ 		
+		Entry<Integer, Double> current = null;
 		while(iterator.hasNext()) {
 			current = iterator.next();
-			dataSeries1.getData().add(new XYChart.Data( counter, current));
-			counter++;
+			
+			dataSeries1.getData().add(new XYChart.Data<Number, Number>(current.getKey(), current.getValue()));
 		}
 
         lineChart.getData().add(dataSeries1);
 
         VBox vbox = new VBox(lineChart);
-
         Scene scene = new Scene(vbox, 400, 200);
 
         primaryStage.setScene(scene);

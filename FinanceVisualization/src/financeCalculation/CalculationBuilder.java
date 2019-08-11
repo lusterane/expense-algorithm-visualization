@@ -3,11 +3,12 @@ package financeCalculation;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.HashMap;
 import java.util.Stack;
 
 public class CalculationBuilder {
-	public static List<Double> buildCalculation(List<ExpenseObject> expenseObjectList, String timeInterval, int stoppingPoint) {
-		List<Double> listTotals = new ArrayList<Double>();
+	public static HashMap<Integer, Double> buildCalculation(List<ExpenseObject> expenseObjectList, String timeInterval, int stoppingPoint) {
+		HashMap<Integer, Double> hashMapTotals = new HashMap<Integer, Double>();
 		
 		List<ExpenseObject> orderedList = orderForTimeInterval(expenseObjectList, timeInterval);
 		int counter = 1;
@@ -41,14 +42,17 @@ public class CalculationBuilder {
 					}
 				}
 				counter++;
-				listTotals.add(total);
+				
+				// counter is month
+				// total is calculated price of month
+				hashMapTotals.put(counter, total);
 			}
 		}
 		else if(timeInterval.equals(ExpenseObject.YEARLY)){
 			System.out.println("Sorry, no implementation for this yet.");
 		}
 		
-		return listTotals;
+		return hashMapTotals;
 	}
 	
 	private static List<ExpenseObject> orderForTimeInterval(List<ExpenseObject> expenseObjectList, String timeInterval){
