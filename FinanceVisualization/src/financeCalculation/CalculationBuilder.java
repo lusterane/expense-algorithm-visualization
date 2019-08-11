@@ -7,81 +7,79 @@ import java.util.HashMap;
 import java.util.Stack;
 
 public class CalculationBuilder {
-	public static HashMap<Integer, Double> buildCalculation(List<ExpenseObject> expenseObjectList, String timeInterval, int stoppingPoint) {
+	public static HashMap<Integer, Double> buildCalculation(List<ExpenseObject> expenseObjectList, String timeInterval,
+			int stoppingPoint) {
 		HashMap<Integer, Double> hashMapTotals = new HashMap<Integer, Double>();
 		hashMapTotals.put(0, 0.0);
-		
+
 		List<ExpenseObject> orderedList = orderForTimeInterval(expenseObjectList, timeInterval);
-		
+
 		int counter = 1;
-		
-		if(timeInterval.equals(ExpenseObject.DAILY)){
+
+		if (timeInterval.equals(ExpenseObject.DAILY)) {
 			System.out.println("Sorry, no implementation for this yet.");
-		}
-		else if(timeInterval.equals(ExpenseObject.MONTHLY)){
-			while(counter <= stoppingPoint) {
+		} else if (timeInterval.equals(ExpenseObject.MONTHLY)) {
+			while (counter <= stoppingPoint) {
 				Iterator<ExpenseObject> iterator = orderedList.iterator();
-				
+
 				double total = counter;
 				ExpenseObject current;
-				while(iterator.hasNext()) {
+				while (iterator.hasNext()) {
 					current = iterator.next();
-					
-					if(current.getTimeInterval().contentEquals(ExpenseObject.MONTHLY)) {
+
+					if (current.getChargeInterval().contentEquals(ExpenseObject.MONTHLY)) {
 						total *= current.getAmount();
-					}
-					else if(current.getTimeInterval().contentEquals(ExpenseObject.YEARLY)) {
+					} else if (current.getChargeInterval().contentEquals(ExpenseObject.YEARLY)) {
 						int monthExpenseConversion = 1;
-						if(counter != 0 && counter/12 != 0)
-							monthExpenseConversion = counter/12;
-						total += current.getAmount()*monthExpenseConversion;					
-					}
-					else if(current.getTimeInterval().contentEquals(ExpenseObject.ONE_TIME)) {
-						total += current.getAmount();					
-					}
-					else if(current.getTimeInterval().contentEquals(ExpenseObject.DAILY)){
-						total += current.getAmount()*31;
+						if (counter != 0 && counter / 12 != 0)
+							monthExpenseConversion = counter / 12;
+						total += current.getAmount() * monthExpenseConversion;
+					} else if (current.getChargeInterval().contentEquals(ExpenseObject.ONE_TIME)) {
+						total += current.getAmount();
+					} else if (current.getChargeInterval().contentEquals(ExpenseObject.DAILY)) {
+						total += current.getAmount() * 31;
 					}
 				}
-				
+
 				// counter is month
 				// total is calculated price of month
 				hashMapTotals.put(counter, total);
 				counter++;
 			}
-		}
-		else if(timeInterval.equals(ExpenseObject.YEARLY)){
+		} else if (timeInterval.equals(ExpenseObject.YEARLY)) {
 			System.out.println("Sorry, no implementation for this yet.");
 		}
-		
+
 		return hashMapTotals;
 	}
-	
-	private static List<ExpenseObject> orderForTimeInterval(List<ExpenseObject> expenseObjectList, String timeInterval){
+
+	private static List<ExpenseObject> orderForTimeInterval(List<ExpenseObject> expenseObjectList,
+			String timeInterval) {
 		List<ExpenseObject> ret = new ArrayList<ExpenseObject>();
 		Stack<ExpenseObject> temp_stack = new Stack<ExpenseObject>();
-		
+
 		Iterator<ExpenseObject> iterator = expenseObjectList.iterator();
-		
+
 		ExpenseObject current;
-		
-		if(timeInterval.equals(ExpenseObject.MONTHLY)) {
-			
-			while(iterator.hasNext()) {
+
+		if (timeInterval.equals(ExpenseObject.MONTHLY)) {
+
+			while (iterator.hasNext()) {
 				current = iterator.next();
-				if(current.getTimeInterval().equals(ExpenseObject.MONTHLY)){
+				if (current.getChargeInterval().equals(ExpenseObject.MONTHLY)) {
 					ret.add(current);
-				}
-				else {
+				} else {
 					temp_stack.push(current);
 				}
 			}
-			
-			while(!temp_stack.isEmpty()) {
+
+			while (!temp_stack.isEmpty()) {
 				ret.add(temp_stack.pop());
 			}
+		} else {
+			System.out.println("Sorry, no implementation for this yet.");
 		}
-		
+
 		return ret;
 	}
 }
