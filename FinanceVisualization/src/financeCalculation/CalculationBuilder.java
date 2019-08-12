@@ -15,14 +15,15 @@ public class CalculationBuilder {
 		List<ExpenseObject> orderedList = orderForTimeInterval(expenseObjectList, timeInterval);
 
 		int counter = 1;
-
+		double total = 0;
+		boolean oneTimeChargeAdded = false;
+		
 		if (timeInterval.equals(ExpenseObject.DAILY)) {
 			System.out.println("Sorry, no implementation for this yet.");
 		} else if (timeInterval.equals(ExpenseObject.MONTHLY)) {
 			while (counter <= stoppingPoint) {
 				Iterator<ExpenseObject> iterator = orderedList.iterator();
 
-				double total = counter;
 				ExpenseObject current;
 				while (iterator.hasNext()) {
 					current = iterator.next();
@@ -30,13 +31,15 @@ public class CalculationBuilder {
 					if (current.getChargeInterval().contentEquals(ExpenseObject.MONTHLY)) {
 						total *= current.getAmount();
 					} else if (current.getChargeInterval().contentEquals(ExpenseObject.YEARLY)) {
-						int monthExpenseConversion = 1;
-						if (counter != 0 && counter / 12 != 0)
-							monthExpenseConversion = counter / 12;
-						total += current.getAmount() * monthExpenseConversion;
+						int yearRemainder = counter%12;
+						if(yearRemainder == 0) {
+							total += current.getAmount();
+						}
 					} else if (current.getChargeInterval().contentEquals(ExpenseObject.ONE_TIME)) {
 						total += current.getAmount();
+						
 					} else if (current.getChargeInterval().contentEquals(ExpenseObject.DAILY)) {
+						// refactor this code
 						total += current.getAmount() * 31;
 					}
 				}

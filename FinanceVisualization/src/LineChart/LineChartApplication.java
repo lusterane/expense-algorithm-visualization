@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import financeCalculation.CalculationBuilder;
+import financeCalculation.DataProxyService;
 import financeCalculation.ExpenseObject;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -25,6 +26,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
 public class LineChartApplication extends Application{
+	
+	private DataProxyService dataProxyService;
+	public LineChartApplication(DataProxyService dataProxyService) {
+		this.dataProxyService = dataProxyService;
+	}
 	@Override
     public void start(Stage primaryStage) throws Exception {
         // setting title
@@ -38,10 +44,10 @@ public class LineChartApplication extends Application{
         yAxis.setLabel("Amount of Expense (USD)");
         
         
-        
+        dataProxyService.buildExpensesHashMap(ExpenseObject.MONTHLY, 60);
         
 		final LineChart lineChart = new LineChart(xAxis, yAxis, FXCollections.observableArrayList(
-				new XYChart.Series("Expenses 1", FXCollections.observableArrayList(plot(tempGetData())))));
+				new XYChart.Series("Expenses 1", FXCollections.observableArrayList(plot(dataProxyService.getExpensesHashMap())))));
 		lineChart.setCursor(Cursor.CROSSHAIR);
 		
 
@@ -125,6 +131,7 @@ public class LineChartApplication extends Application{
 
 		private Label createDataThresholdLabel(int priorValue, double value) {
 			DecimalFormat df = new DecimalFormat("#.00");
+			System.out.println(value);
 			final Label label = new Label("$" + df.format(value) + "");
 			label.getStyleClass().addAll("default-color0", "chart-line-symbol", "chart-series-line");
 			label.setStyle("-fx-font-size: 20; -fx-font-weight: bold;");
