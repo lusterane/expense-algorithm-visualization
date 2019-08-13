@@ -12,7 +12,7 @@ public class DataProxyService {
 	public DataProxyService() {
 		this.expenseObjectList = new ArrayList<ExpenseObject>();
 		this.expensesHashMap = new HashMap<Integer, Double>();
-		this.amountOfMonths = 1;
+		this.amountOfMonths = 30;
 	}
 	
 	public void addExpenseObject(String name, double rate, String chargeInterval) {

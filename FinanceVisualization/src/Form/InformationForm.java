@@ -12,12 +12,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -64,7 +66,7 @@ public class InformationForm extends Application {
 	}
 	
 	private void implementUI() {
-		Text scenetitle = new Text("Welcome");
+		Text scenetitle = new Text("Expense Visualizer");
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		grid.add(scenetitle, 0, 0, 2, 1);
 		
@@ -97,27 +99,75 @@ public class InformationForm extends Application {
 			grid.add(chargeRateDropDown, 1, 3);
 		
 			
-		Label dod = new Label("Duration of data:");
-		grid.add(dod, 0, 6);
 		
-		TextField durationOfData = new TextField();
-		grid.add(durationOfData, 1, 6);
 		
 		Button btn = new Button("Add Expense");
 		HBox hbBtn = new HBox(10);
 		hbBtn.setAlignment(Pos.BOTTOM_LEFT);
 		hbBtn.getChildren().add(btn);
-		grid.add(hbBtn, 1, 7);
+		grid.add(hbBtn, 1, 6);
 		
 		Button btnSubmission = new Button("Visualize!");
 		HBox hbBtnSubmission = new HBox(10);
 		hbBtnSubmission.setAlignment(Pos.BOTTOM_LEFT);
 		hbBtnSubmission.getChildren().add(btnSubmission);
-		grid.add(hbBtnSubmission, 1, 8);
+		grid.add(hbBtnSubmission, 1, 7);
 
+		// message box
 		final Text actiontarget = new Text();
-        grid.add(actiontarget, 1, 9);
+        grid.add(actiontarget, 1, 8);
         
+        
+        final Separator separator = new Separator();
+        separator.setHalignment(HPos.LEFT);
+        grid.add(separator, 0, 9);
+        final Separator separator2 = new Separator();
+        separator2.setHalignment(HPos.LEFT);
+        grid.add(separator2, 1, 9);
+        
+        
+        Label dod = new Label("Duration of data:");
+		grid.add(dod, 0, 11);
+		
+		TextField durationOfData = new TextField();
+		grid.add(durationOfData, 1, 11);
+		
+		Button btnSettingsSubmit = new Button("Submit Settings");
+		HBox hbSsBtn = new HBox(10);
+		hbSsBtn.setAlignment(Pos.BOTTOM_LEFT);
+		hbSsBtn.getChildren().add(btnSettingsSubmit);
+		grid.add(hbSsBtn, 1, 12);
+		
+		// settings message box
+		final Text settingstarget = new Text();
+        grid.add(settingstarget, 1, 13);
+        
+		
+		// submit settings
+		btnSettingsSubmit.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+            	try {
+	            	if(durationOfData.textProperty().isEmpty().getValue())
+	            	{
+		                settingstarget.setFill(Color.FIREBRICK);
+		                settingstarget.setText("Please fill all settings information");
+	            	}
+	            	else {
+	            		int duration = Integer.parseInt(durationOfData.textProperty().getValue());
+	            		
+	            		
+	            		dataProxyService.setAmountOfMonths(duration);
+	            		
+	            		settingstarget.setFill(Color.LIMEGREEN);
+	            		settingstarget.setText("Updated!");
+	            	}
+            	}
+            	catch(Exception e1) {
+            		e1.printStackTrace();
+            	}
+            }
+        });
         
         // adding
         btn.setOnAction(new EventHandler<ActionEvent>() {

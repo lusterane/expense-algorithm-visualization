@@ -47,7 +47,7 @@ public class LineChartApplication extends Application{
         yAxis.setLabel("Amount of Expense (USD)");
         
         // set in settings category
-        int upperBound = 30;
+        int upperBound = dataProxyService.getAmountOfMonths();
         
         dataProxyService.setAmountOfMonths(upperBound);
         xAxis.setUpperBound((int)upperBound);
