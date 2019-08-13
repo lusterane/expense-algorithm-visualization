@@ -38,14 +38,14 @@ Services include...
 
 
 First I would enter information for apple store deployment. The title can be anything you want.
-[Image of Apple Deployment Information](https://i.imgur.com/Rhz2HZL.png)
+![Image of Apple Deployment Information](https://i.imgur.com/Rhz2HZL.png)
 Then click 'Add Expenses' and you should see a green confirmation message. If not, follow the instructions of the error message.
-[Image of Added Expenses](https://imgur.com/XYxuFOW.png)
+![Image of Added Expenses](https://imgur.com/XYxuFOW.png)
 Do the same for Android store information. ***Make sure the information for charge rate is correct*** In this case, The charge rate will be $25 per month. 
-[Image of Android Store Deployment Information](https://imgur.com/cZGRU18.png)
+![Image of Android Store Deployment Information](https://imgur.com/cZGRU18.png)
 *I will also add Firebase's but I won't show this in an image.*
 Click on 'Visualize' to see the graph. *(Note: Your past entries will dissapear upon visualization so make sure you inputted all that you need.)*
-[Image of Visualized Graph](https://i.imgur.com/0DvlD05.png)
+![Image of Visualized Graph](https://i.imgur.com/0DvlD05.png)
 
 ## Contributing
 
