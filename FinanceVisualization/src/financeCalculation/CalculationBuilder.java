@@ -26,12 +26,12 @@ public class CalculationBuilder {
 				ExpenseObject current;
 				while (iterator.hasNext()) {
 					current = iterator.next();
+					System.out.println("Current: "+ current.getAmount());
 					if (current.getChargeInterval().contentEquals(ExpenseObject.MONTHLY)) {
 						total += current.getAmount();
 					} else if (current.getChargeInterval().contentEquals(ExpenseObject.YEARLY)) {
-						int yearRemainder = counter%12;
-						// counts one year past and also first year payment
-						if(yearRemainder == 0 || counter == 1) {
+						// adds current if one month past a year
+						if(counter%12 == 1) {
 							total += current.getAmount();
 						}
 					} else if (current.getChargeInterval().contentEquals(ExpenseObject.ONE_TIME) && !current.getAdded()) {
