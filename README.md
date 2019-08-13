@@ -1,6 +1,9 @@
 # Expense Algorithm Visualization
+> Algorithm that calculates aggregate expenses and visualizes data over time with JavaFX
 
 This application allows users to interact with my algorithm and line chart visuals through a GUI developed with the JavaFX library. The algorithm is written in Java and it calculates varying expense rates in aggregation over varying time periods. Use cases include, personal finance management, calculating billing cycles, service charge estimates, and whatever you find applicable.
+
+![Project Picture](https://i.imgur.com/AU151TC.png)
 
 ## Getting Started
 
