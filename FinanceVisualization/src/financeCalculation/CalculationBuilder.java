@@ -26,7 +26,6 @@ public class CalculationBuilder {
 				ExpenseObject current;
 				while (iterator.hasNext()) {
 					current = iterator.next();
-					System.out.println("Current: "+ current.getAmount());
 					if (current.getChargeInterval().contentEquals(ExpenseObject.MONTHLY)) {
 						total += current.getAmount();
 					} else if (current.getChargeInterval().contentEquals(ExpenseObject.YEARLY)) {
@@ -38,7 +37,6 @@ public class CalculationBuilder {
 						total += current.getAmount();
 						
 					} else if (current.getChargeInterval().contentEquals(ExpenseObject.DAILY)) {
-						// refactor this code
 						total += current.getAmount() * 31;
 					}
 					current.setAdded(true);

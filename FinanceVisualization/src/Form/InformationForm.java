@@ -1,6 +1,8 @@
 package Form;
 
 
+import java.util.concurrent.TimeUnit;
+
 import LineChart.LineChartApplication;
 import financeCalculation.DataProxyService;
 import financeCalculation.ExpenseObject;
@@ -15,6 +17,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -78,14 +81,11 @@ public class InformationForm extends Application {
 		TextField serviceName = new TextField();
 		grid.add(serviceName, 1, 1);
 		
-		Label cra = new Label("Charge Rate Amount:");
+		Label cra = new Label("Charge Rate:");
 		grid.add(cra, 0, 2);
 		
 		TextField chargeRateAmount = new TextField();
 		grid.add(chargeRateAmount, 1, 2);
-		
-		Label cr = new Label("Charge Rate:");
-		grid.add(cr, 0, 3);
 		
 
 		ObservableList<String> options = 
@@ -96,26 +96,29 @@ public class InformationForm extends Application {
 			        ExpenseObject.YEARLY
 			    );
 			final ComboBox chargeRateDropDown = new ComboBox(options);
-			grid.add(chargeRateDropDown, 1, 3);
+			grid.add(chargeRateDropDown, 2, 2);
 		
 			
 		
 		
 		Button btn = new Button("Add Expense");
 		HBox hbBtn = new HBox(10);
-		hbBtn.setAlignment(Pos.BOTTOM_LEFT);
+		hbBtn.setAlignment(Pos.CENTER_RIGHT);
 		hbBtn.getChildren().add(btn);
-		grid.add(hbBtn, 1, 6);
+		btn.setMinWidth(120);
+		grid.add(hbBtn, 1, 5);
+		
 		
 		Button btnSubmission = new Button("Visualize!");
 		HBox hbBtnSubmission = new HBox(10);
-		hbBtnSubmission.setAlignment(Pos.BOTTOM_LEFT);
+		hbBtnSubmission.setAlignment(Pos.CENTER_RIGHT);
 		hbBtnSubmission.getChildren().add(btnSubmission);
-		grid.add(hbBtnSubmission, 1, 7);
+		btnSubmission.setMinWidth(120);
+		grid.add(hbBtnSubmission, 1, 6);
 
 		// message box
 		final Text actiontarget = new Text();
-        grid.add(actiontarget, 1, 8);
+        grid.add(actiontarget, 1, 7);
         
         
         final Separator separator = new Separator();
@@ -129,12 +132,16 @@ public class InformationForm extends Application {
         Label dod = new Label("Duration of data:");
 		grid.add(dod, 0, 11);
 		
-		TextField durationOfData = new TextField();
+		TextField durationOfData = new TextField("36");
 		grid.add(durationOfData, 1, 11);
+		
+		Label dodSupportLabel = new Label("month(s)");
+		grid.add(dodSupportLabel, 2, 11);
+		dodSupportLabel.setAlignment(Pos.CENTER_LEFT);
 		
 		Button btnSettingsSubmit = new Button("Submit Settings");
 		HBox hbSsBtn = new HBox(10);
-		hbSsBtn.setAlignment(Pos.BOTTOM_LEFT);
+		hbSsBtn.setAlignment(Pos.CENTER_RIGHT);
 		hbSsBtn.getChildren().add(btnSettingsSubmit);
 		grid.add(hbSsBtn, 1, 12);
 		
@@ -143,7 +150,7 @@ public class InformationForm extends Application {
         grid.add(settingstarget, 1, 13);
         
 		
-		// submit settings
+		// updating settings
 		btnSettingsSubmit.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -161,6 +168,9 @@ public class InformationForm extends Application {
 	            		
 	            		settingstarget.setFill(Color.LIMEGREEN);
 	            		settingstarget.setText("Updated!");
+	            		
+	            		// clear text fields
+	            		durationOfData.clear();
 	            	}
             	}
             	catch(Exception e1) {
@@ -191,6 +201,10 @@ public class InformationForm extends Application {
 	            		
 	            		actiontarget.setFill(Color.LIMEGREEN);
 	            		actiontarget.setText("Added!");
+	            		
+	            		// clear text fields
+	            		serviceName.clear();
+	            		chargeRateAmount.clear();
 	            	}
             	}
             	catch(Exception e1) {
@@ -199,7 +213,7 @@ public class InformationForm extends Application {
             }
         });
         
-        // submission
+        // visualization
         btnSubmission.setOnAction(new EventHandler<ActionEvent>() {
        	 
             @SuppressWarnings("unused")
@@ -214,6 +228,17 @@ public class InformationForm extends Application {
             		LineChartApplication lca = new LineChartApplication(dataProxyService);
             		try {
 						lca.start(new Stage());
+						
+						// clear text fields
+	            		serviceName.clear();
+	            		chargeRateAmount.clear();
+	            		durationOfData.clear();
+	            		
+	            		// reset data proxy service instance
+	            		dataProxyService = new DataProxyService();
+	            		actiontarget.setFill(Color.ORANGE);
+	            		actiontarget.setText("Data has been reset");
+	            		
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
