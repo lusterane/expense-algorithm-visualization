@@ -16,7 +16,6 @@ public class CalculationBuilder {
 
 		int counter = 1;
 		double total = 0;
-		boolean oneTimeChargeAdded = false;
 		
 		if (timeInterval.equals(ExpenseObject.DAILY)) {
 			System.out.println("Sorry, no implementation for this yet.");
@@ -27,21 +26,22 @@ public class CalculationBuilder {
 				ExpenseObject current;
 				while (iterator.hasNext()) {
 					current = iterator.next();
-
 					if (current.getChargeInterval().contentEquals(ExpenseObject.MONTHLY)) {
-						total *= current.getAmount();
+						total += current.getAmount();
 					} else if (current.getChargeInterval().contentEquals(ExpenseObject.YEARLY)) {
 						int yearRemainder = counter%12;
-						if(yearRemainder == 0) {
+						// counts one year past and also first year payment
+						if(yearRemainder == 0 || counter == 1) {
 							total += current.getAmount();
 						}
-					} else if (current.getChargeInterval().contentEquals(ExpenseObject.ONE_TIME)) {
+					} else if (current.getChargeInterval().contentEquals(ExpenseObject.ONE_TIME) && !current.getAdded()) {
 						total += current.getAmount();
 						
 					} else if (current.getChargeInterval().contentEquals(ExpenseObject.DAILY)) {
 						// refactor this code
 						total += current.getAmount() * 31;
 					}
+					current.setAdded(true);
 				}
 
 				// counter is month

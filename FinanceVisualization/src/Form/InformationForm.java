@@ -84,6 +84,7 @@ public class InformationForm extends Application {
 		
 		Label cr = new Label("Charge Rate:");
 		grid.add(cr, 0, 3);
+		
 
 		ObservableList<String> options = 
 			    FXCollections.observableArrayList(
@@ -96,20 +97,26 @@ public class InformationForm extends Application {
 			grid.add(chargeRateDropDown, 1, 3);
 		
 			
+		Label dod = new Label("Duration of data:");
+		grid.add(dod, 0, 6);
+		
+		TextField durationOfData = new TextField();
+		grid.add(durationOfData, 1, 6);
+		
 		Button btn = new Button("Add Expense");
 		HBox hbBtn = new HBox(10);
 		hbBtn.setAlignment(Pos.BOTTOM_LEFT);
 		hbBtn.getChildren().add(btn);
-		grid.add(hbBtn, 1, 5);
+		grid.add(hbBtn, 1, 7);
 		
 		Button btnSubmission = new Button("Visualize!");
 		HBox hbBtnSubmission = new HBox(10);
 		hbBtnSubmission.setAlignment(Pos.BOTTOM_LEFT);
 		hbBtnSubmission.getChildren().add(btnSubmission);
-		grid.add(hbBtnSubmission, 1, 6);
+		grid.add(hbBtnSubmission, 1, 8);
 
 		final Text actiontarget = new Text();
-        grid.add(actiontarget, 1, 7);
+        grid.add(actiontarget, 1, 9);
         
         
         // adding
@@ -128,8 +135,10 @@ public class InformationForm extends Application {
 	            		String name = serviceName.textProperty().getValue();
 	            		double amount = Double.parseDouble(chargeRateAmount.textProperty().getValue());
 	            		String rate = chargeRateDropDown.getValue().toString();
-	            		System.out.println("Name: "+ name+", Amount: "+amount+", Rate:"+rate);
+	            		
+	            		
 	            		dataProxyService.addExpenseObject(name, amount, rate);
+	            		
 	            		actiontarget.setFill(Color.LIMEGREEN);
 	            		actiontarget.setText("Added!");
 	            	}

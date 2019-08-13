@@ -14,9 +14,12 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.ValueAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import javafx.collections.*;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
@@ -37,15 +40,21 @@ public class LineChartApplication extends Application{
 		primaryStage.setTitle("Expenses Visualization");
         
 		// defining axis
-        NumberAxis xAxis = new NumberAxis();
+        NumberAxis xAxis = new NumberAxis(0.0, 100.0, 1.0);
         xAxis.setLabel("Months");
 
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Amount of Expense (USD)");
         
+        // set in settings category
+        int upperBound = 30;
         
-        dataProxyService.buildExpensesHashMap(ExpenseObject.MONTHLY, 60);
+        dataProxyService.setAmountOfMonths(upperBound);
+        xAxis.setUpperBound((int)upperBound);
         
+        dataProxyService.buildExpensesHashMap(ExpenseObject.MONTHLY, dataProxyService.getAmountOfMonths());
+        
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		final LineChart lineChart = new LineChart(xAxis, yAxis, FXCollections.observableArrayList(
 				new XYChart.Series("Expenses 1", FXCollections.observableArrayList(plot(dataProxyService.getExpensesHashMap())))));
 		lineChart.setCursor(Cursor.CROSSHAIR);
@@ -71,7 +80,7 @@ public class LineChartApplication extends Application{
         Iterator<Entry<Integer, Double>> iterator = hm.entrySet().iterator();
 		while(iterator.hasNext()) {
 			current = iterator.next();
-          final XYChart.Data<Integer, Double> data = new XYChart.Data<>(current.getKey(), current.getValue());
+          final XYChart.Data<Integer, Double> data = new XYChart.Data<Integer, Double>(current.getKey(), current.getValue());
           data.setNode(
               new HoveredThresholdNode(
                   current.getKey(), current.getValue()
@@ -108,7 +117,7 @@ public class LineChartApplication extends Application{
 	/** a node which displays a value on hover, but is otherwise empty */
 	class HoveredThresholdNode extends StackPane {
 		HoveredThresholdNode(int priorValue, double value) {
-			setPrefSize(15, 15);
+			setPrefSize(10, 10);
 
 			final Label label = createDataThresholdLabel(priorValue, value);
 
@@ -131,7 +140,6 @@ public class LineChartApplication extends Application{
 
 		private Label createDataThresholdLabel(int priorValue, double value) {
 			DecimalFormat df = new DecimalFormat("#.00");
-			System.out.println(value);
 			final Label label = new Label("$" + df.format(value) + "");
 			label.getStyleClass().addAll("default-color0", "chart-line-symbol", "chart-series-line");
 			label.setStyle("-fx-font-size: 20; -fx-font-weight: bold;");

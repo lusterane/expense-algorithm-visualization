@@ -7,10 +7,12 @@ import java.util.List;
 public class DataProxyService {
 	private List<ExpenseObject> expenseObjectList;
 	private HashMap<Integer, Double> expensesHashMap;
+	private int amountOfMonths;
 	
 	public DataProxyService() {
 		this.expenseObjectList = new ArrayList<ExpenseObject>();
 		this.expensesHashMap = new HashMap<Integer, Double>();
+		this.amountOfMonths = 1;
 	}
 	
 	public void addExpenseObject(String name, double rate, String chargeInterval) {
@@ -24,6 +26,14 @@ public class DataProxyService {
 	public HashMap<Integer, Double> buildExpensesHashMap(String timeIncrement, int duration) {
 		expensesHashMap = CalculationBuilder.buildCalculation(expenseObjectList, timeIncrement, duration);
 		return expensesHashMap;
+	}
+	
+	public int getAmountOfMonths() {
+		return amountOfMonths;
+	}
+	
+	public void setAmountOfMonths(int amountOfMonths) {
+		this.amountOfMonths = amountOfMonths;
 	}
 	
 	// temporary place holder to mimic logic abstraction

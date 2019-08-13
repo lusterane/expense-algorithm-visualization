@@ -3,6 +3,7 @@ package financeCalculation;
 public class ExpenseObject {
 	private String name, chargeInterval;
 	private double amount;
+	private boolean added;
 	public static final String YEARLY = "YEARLY";
 	public static final String MONTHLY = "MONTHLY";
 	public static final String DAILY = "DAILY";
@@ -12,6 +13,7 @@ public class ExpenseObject {
 		this.name = name;
 		this.amount = amount;
 		this.chargeInterval = chargeInterval;
+		added = false;
 	}
 
 	public String getName() {
@@ -36,5 +38,13 @@ public class ExpenseObject {
 
 	public void setAmount(double amount) {
 		this.amount = amount;
+	}
+	
+	public boolean getAdded() {
+		return added;
+	}
+	
+	public void setAdded(boolean added) {
+		this.added = added;
 	}
 }
