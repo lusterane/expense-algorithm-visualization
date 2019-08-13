@@ -49,8 +49,8 @@ Click on 'Visualize' to see the graph. *(Note: Your past entries will dissapear 
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/lusterane/expense-algorithm-visualization) for details on my code of conduct, and the process for submitting pull requests to me.
+Please read [CONTRIBUTING.md](https://gist.github.com/lusterane/eeb0d529b32db5ccdc2be158de9f4163) for details on my code of conduct, and the process for submitting pull requests to me.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
